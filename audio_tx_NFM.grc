@@ -1,16 +1,16 @@
 options:
   parameters:
-    author: thomasian06
+    author: Barry Duggan
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
     copyright: ''
-    description: ''
+    description: NBFM transmitter
     gen_cmake: 'On'
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: audio_tx
+    id: NFM_xmt
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -21,17 +21,66 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: Audio Transmitter
+    title: NFM_xmt
     window_size: ''
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 8]
+    coordinate: [16, 12.0]
     rotation: 0
     state: enabled
 
 blocks:
+- name: if_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: int(usrp_rate/3)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 124.0]
+    rotation: 0
+    state: true
+- name: pl_freq
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: PL Tone
+    label0: '0'
+    label1: '1'
+    label2: '2'
+    label3: ''
+    label4: ''
+    labels: '["0.0", "67.0", "71.9", "74.4", "77.0", "79.7", "82.5", "85.4", "88.5",
+      "91.5", "94.8", "97.4", "100.0", "103.5", "107.2", "110.9", "114.8", "118.8",
+      "123.0", "127.3", "131.8", "136.5", "141.3", "146.2", "151.4", "156.7", "162.2",
+      "167.9", "173.8", "179.9", "186.2", "192.8", "203.5", "210.7", "218.1", "225.7",
+      "233.6", "241.8", "250.3"]'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0.0, 67.0, 71.9, 74.4, 77.0, 79.7, 82.5, 85.4, 88.5, 91.5, 94.8, 97.4,
+      100.0, 103.5, 107.2, 110.9, 114.8, 118.8, 123.0, 127.3, 131.8, 136.5, 141.3,
+      146.2, 151.4, 156.7, 162.2, 167.9, 173.8, 179.9, 186.2, 192.8, 203.5, 210.7,
+      218.1, 225.7, 233.6, 241.8, 250.3]'
+    orient: Qt.QVBoxLayout
+    type: real
+    value: '0.0'
+    widget: combo_box
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [720, 12.0]
+    rotation: 0
+    state: true
 - name: samp_rate
   id: variable
   parameters:
@@ -41,7 +90,40 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [185, 12]
+    coordinate: [200, 12.0]
+    rotation: 0
+    state: enabled
+- name: usrp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '576000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 76.0]
+    rotation: 0
+    state: true
+- name: volume
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Audio gain
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.1'
+    stop: '10.0'
+    value: '5.0'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [288, 12.0]
     rotation: 0
     state: enabled
 - name: analog_nbfm_tx_0
@@ -49,19 +131,19 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    audio_rate: '48000'
+    audio_rate: samp_rate
     comment: ''
     fh: '-1.0'
     max_dev: 5e3
     maxoutbuf: '0'
     minoutbuf: '0'
-    quad_rate: '192000'
+    quad_rate: if_rate
     tau: 75e-6
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [986, 278]
+    coordinate: [776, 148.0]
     rotation: 0
     state: true
 - name: analog_sig_source_x_0
@@ -69,9 +151,9 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    amp: 150e-3
-    comment: ''
-    freq: '0'
+    amp: '0.15'
+    comment: PL tone gen
+    freq: pl_freq
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
@@ -83,9 +165,28 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [583, 207]
+    coordinate: [456, 44.0]
     rotation: 0
     state: true
+- name: audio_source_0
+  id: audio_source
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    device_name: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_outputs: '1'
+    ok_to_block: 'False'
+    samp_rate: '48000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [64, 196.0]
+    rotation: 0
+    state: enabled
 - name: band_pass_filter_0
   id: band_pass_filter
   parameters:
@@ -102,13 +203,13 @@ blocks:
     minoutbuf: '0'
     samp_rate: samp_rate
     type: fir_filter_fff
-    width: '2000'
+    width: '200'
     win: firdes.WIN_HAMMING
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [432, 328]
+    coordinate: [264, 140.0]
     rotation: 0
     state: true
 - name: blocks_add_xx_0
@@ -126,7 +227,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [849, 300]
+    coordinate: [672, 168.0]
     rotation: 0
     state: true
 - name: blocks_multiply_const_vxx_0
@@ -134,8 +235,8 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    comment: ''
-    const: '5'
+    comment: Audio gain
+    const: volume
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -144,16 +245,16 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [634, 384]
+    coordinate: [456, 196.0]
     rotation: 0
-    state: true
-- name: blocks_repeat_0
+    state: enabled
+- name: blocks_repeat_0_0
   id: blocks_repeat
   parameters:
     affinity: ''
     alias: ''
     comment: ''
-    interp: '3'
+    interp: (int)(usrp_rate/if_rate)
     maxoutbuf: '0'
     minoutbuf: '0'
     type: complex
@@ -162,59 +263,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [616, 541]
-    rotation: 0
-    state: true
-- name: blocks_wavfile_source_0
-  id: blocks_wavfile_source
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    file: /home/thomasian06/Documents/ASEN_4028/yeet.wav
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    nchan: '1'
-    repeat: 'True'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [191, 373]
-    rotation: 0
-    state: true
-- name: limesdr_sink_0
-  id: limesdr_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    allow_tcxo_dac: '0'
-    analog_bandw_ch0: 5e6
-    analog_bandw_ch1: 5e6
-    calibr_bandw_ch0: 2.5e6
-    calibr_bandw_ch1: 2.5e6
-    channel_mode: '0'
-    comment: ''
-    dacVal: '180'
-    digital_bandw_ch0: samp_rate*4*3
-    digital_bandw_ch1: samp_rate
-    filename: ''
-    gain_dB_ch0: '70'
-    gain_dB_ch1: '1'
-    length_tag_name: ''
-    nco_freq_ch0: '0'
-    nco_freq_ch1: '0'
-    oversample: '0'
-    pa_path_ch0: '1'
-    pa_path_ch1: '255'
-    rf_freq: 2400e6
-    samp_rate: samp_rate*4*3
-    serial: ''
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [869, 525]
+    coordinate: [400, 356.0]
     rotation: 0
     state: true
 - name: low_pass_filter_0
@@ -230,7 +279,7 @@ blocks:
     interp: '1'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samp_rate: samp_rate*4
+    samp_rate: if_rate
     type: fir_filter_ccf
     width: '2000'
     win: firdes.WIN_HAMMING
@@ -238,7 +287,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [420, 493]
+    coordinate: [192, 308.0]
     rotation: 0
     state: true
 - name: qtgui_sink_x_0
@@ -246,7 +295,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    bw: samp_rate*4
+    bw: if_rate
     comment: ''
     fc: '0'
     fftsize: '1024'
@@ -260,14 +309,14 @@ blocks:
     plotwaterfall: 'True'
     rate: '10'
     showports: 'False'
-    showrf: 'False'
+    showrf: 'True'
     type: complex
     wintype: firdes.WIN_BLACKMAN_hARRIS
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [614, 591]
+    coordinate: [400, 428.0]
     rotation: 0
     state: true
 - name: virtual_sink_0
@@ -275,12 +324,12 @@ blocks:
   parameters:
     alias: ''
     comment: ''
-    stream_id: jump1
+    stream_id: tag1
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1258, 310]
+    coordinate: [1040, 180.0]
     rotation: 0
     state: true
 - name: virtual_source_0
@@ -288,26 +337,46 @@ blocks:
   parameters:
     alias: ''
     comment: ''
-    stream_id: jump1
+    stream_id: tag1
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [242, 541]
+    coordinate: [32, 356.0]
+    rotation: 0
+    state: true
+- name: zeromq_pub_sink_0
+  id: zeromq_pub_sink
+  parameters:
+    address: tcp://127.0.0.1:49203
+    affinity: ''
+    alias: ''
+    comment: USRP sample rate = 576kHz
+    hwm: '-1'
+    pass_tags: 'False'
+    timeout: '100'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [592, 340.0]
     rotation: 0
     state: true
 
 connections:
 - [analog_nbfm_tx_0, '0', virtual_sink_0, '0']
 - [analog_sig_source_x_0, '0', blocks_add_xx_0, '0']
+- [audio_source_0, '0', band_pass_filter_0, '0']
 - [band_pass_filter_0, '0', blocks_multiply_const_vxx_0, '0']
 - [blocks_add_xx_0, '0', analog_nbfm_tx_0, '0']
 - [blocks_multiply_const_vxx_0, '0', blocks_add_xx_0, '1']
-- [blocks_repeat_0, '0', limesdr_sink_0, '0']
-- [blocks_wavfile_source_0, '0', band_pass_filter_0, '0']
-- [low_pass_filter_0, '0', blocks_repeat_0, '0']
+- [blocks_repeat_0_0, '0', zeromq_pub_sink_0, '0']
+- [low_pass_filter_0, '0', blocks_repeat_0_0, '0']
 - [low_pass_filter_0, '0', qtgui_sink_x_0, '0']
 - [virtual_source_0, '0', low_pass_filter_0, '0']
 
 metadata:
   file_format: 1
+
