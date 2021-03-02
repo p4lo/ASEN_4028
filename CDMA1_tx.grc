@@ -118,7 +118,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [521, 164]
+    coordinate: [718, 255]
     rotation: 0
     state: true
 - name: limesdr_sink_0
@@ -152,7 +152,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [836, 96]
+    coordinate: [993, 123]
     rotation: 0
     state: true
 - name: qtgui_sink_x_0
@@ -181,7 +181,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [833, 305]
+    coordinate: [1010, 390]
     rotation: 0
     state: true
 
