@@ -97,7 +97,7 @@ blocks:
     rangeType: float
     start: '0'
     step: '1'
-    stop: '10'
+    stop: '100'
     value: '5'
     widget: counter_slider
   states:
@@ -176,7 +176,7 @@ blocks:
     digital_bandw_ch0: 100e3
     digital_bandw_ch1: 100e3
     filename: ''
-    gain_dB_ch0: '60'
+    gain_dB_ch0: '50'
     gain_dB_ch1: '60'
     lna_path_ch0: '1'
     lna_path_ch1: '1'
