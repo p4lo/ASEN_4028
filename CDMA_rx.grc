@@ -51,7 +51,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: /home/thomasian06/Documents/ASEN_4028/rx_test
+    file: /home/thomasian06/Documents/Testing Data/3_11/rx2_2m
     type: complex
     unbuffered: 'False'
     vlen: '1'
@@ -68,9 +68,9 @@ blocks:
     affinity: ''
     alias: ''
     allow_tcxo_dac: '0'
-    analog_bandw_ch0: 2e6
+    analog_bandw_ch0: 5e6
     analog_bandw_ch1: 1.5e6
-    calibr_bandw_ch0: 2.5e6
+    calibr_bandw_ch0: 5e6
     calibr_bandw_ch1: 2.5e6
     ch_align: 'False'
     channel_mode: '0'
@@ -88,7 +88,7 @@ blocks:
     nco_freq_ch0: '0'
     nco_freq_ch1: '0'
     oversample: '0'
-    rf_freq: 2.4e9
+    rf_freq: 2.7e9
     samp_rate: samp_rate
     serial: ''
   states:

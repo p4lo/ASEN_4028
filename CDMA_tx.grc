@@ -47,7 +47,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [491, 20]
+    coordinate: [557, 201]
     rotation: 0
     state: true
 - name: samp_rate
@@ -59,9 +59,51 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 12]
+    coordinate: [242, 80]
     rotation: 0
     state: enabled
+- name: tx_center_freq
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Transmit Center Frequency
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: 2650e6
+    step: 5e6
+    stop: 2750e6
+    value: 2700e6
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [493, 60]
+    rotation: 0
+    state: true
+- name: tx_gain
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Transmit Gain
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '1'
+    stop: '73'
+    value: '73'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [756, 69]
+    rotation: 0
+    state: true
 - name: blocks_file_source_0
   id: blocks_file_source
   parameters:
@@ -81,7 +123,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [84, 156]
+    coordinate: [71, 266]
     rotation: 0
     state: true
 - name: blocks_pack_k_bits_bb_0
@@ -97,7 +139,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [348, 188]
+    coordinate: [359, 298]
     rotation: 0
     state: true
 - name: digital_constellation_modulator_0
@@ -108,7 +150,7 @@ blocks:
     comment: ''
     constellation: bpsk_mod
     differential: 'False'
-    excess_bw: '0.35'
+    excess_bw: '100'
     log: 'False'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -118,7 +160,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [718, 255]
+    coordinate: [547, 274]
     rotation: 0
     state: true
 - name: limesdr_sink_0
@@ -137,7 +179,7 @@ blocks:
     digital_bandw_ch0: samp_rate
     digital_bandw_ch1: samp_rate
     filename: ''
-    gain_dB_ch0: '65'
+    gain_dB_ch0: tx_gain
     gain_dB_ch1: '1'
     length_tag_name: ''
     nco_freq_ch0: '0'
@@ -145,14 +187,14 @@ blocks:
     oversample: '0'
     pa_path_ch0: '1'
     pa_path_ch1: '255'
-    rf_freq: 2.4e9
+    rf_freq: tx_center_freq
     samp_rate: samp_rate
     serial: ''
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [993, 123]
+    coordinate: [843, 234]
     rotation: 0
     state: true
 - name: qtgui_sink_x_0
@@ -163,7 +205,7 @@ blocks:
     bw: samp_rate
     comment: ''
     fc: '0'
-    fftsize: '1024'
+    fftsize: '2048'
     gui_hint: ''
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -181,7 +223,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1010, 390]
+    coordinate: [845, 330]
     rotation: 0
     state: true
 
