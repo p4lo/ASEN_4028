@@ -126,20 +126,23 @@ blocks:
     coordinate: [71, 266]
     rotation: 0
     state: true
-- name: blocks_pack_k_bits_bb_0
-  id: blocks_pack_k_bits_bb
+- name: blocks_unpacked_to_packed_xx_0
+  id: blocks_unpacked_to_packed_xx
   parameters:
     affinity: ''
     alias: ''
+    bits_per_chunk: '1'
     comment: ''
-    k: '8'
+    endianness: gr.GR_LSB_FIRST
     maxoutbuf: '0'
     minoutbuf: '0'
+    num_ports: '1'
+    type: byte
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [359, 298]
+    coordinate: [323, 290]
     rotation: 0
     state: true
 - name: digital_constellation_modulator_0
@@ -228,8 +231,8 @@ blocks:
     state: true
 
 connections:
-- [blocks_file_source_0, '0', blocks_pack_k_bits_bb_0, '0']
-- [blocks_pack_k_bits_bb_0, '0', digital_constellation_modulator_0, '0']
+- [blocks_file_source_0, '0', blocks_unpacked_to_packed_xx_0, '0']
+- [blocks_unpacked_to_packed_xx_0, '0', digital_constellation_modulator_0, '0']
 - [digital_constellation_modulator_0, '0', limesdr_sink_0, '0']
 - [digital_constellation_modulator_0, '0', qtgui_sink_x_0, '0']
 
