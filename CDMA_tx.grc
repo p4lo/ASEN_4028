@@ -54,7 +54,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: 2.046e6
+    value: 10.23e6
   states:
     bus_sink: false
     bus_source: false
@@ -104,6 +104,24 @@ blocks:
     coordinate: [756, 69]
     rotation: 0
     state: true
+- name: blocks_add_const_vxx_0
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '-1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [796, 298]
+    rotation: 0
+    state: true
 - name: blocks_file_source_0
   id: blocks_file_source
   parameters:
@@ -126,44 +144,71 @@ blocks:
     coordinate: [71, 266]
     rotation: 0
     state: true
-- name: blocks_unpacked_to_packed_xx_0
-  id: blocks_unpacked_to_packed_xx
+- name: blocks_float_to_complex_0
+  id: blocks_float_to_complex
   parameters:
     affinity: ''
     alias: ''
-    bits_per_chunk: '1'
     comment: ''
-    endianness: gr.GR_LSB_FIRST
     maxoutbuf: '0'
     minoutbuf: '0'
-    num_ports: '1'
-    type: byte
+    vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [323, 290]
+    coordinate: [510, 532]
     rotation: 0
     state: true
-- name: digital_constellation_modulator_0
-  id: digital_constellation_modulator
+- name: blocks_multiply_const_vxx_0
+  id: blocks_multiply_const_vxx
   parameters:
     affinity: ''
     alias: ''
     comment: ''
-    constellation: bpsk_mod
-    differential: 'False'
-    excess_bw: '100'
-    log: 'False'
+    const: '2'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samples_per_symbol: '2'
-    verbose: 'False'
+    type: float
+    vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [547, 274]
+    coordinate: [590, 298]
+    rotation: 0
+    state: true
+- name: blocks_repeat_0
+  id: blocks_repeat
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    interp: '10'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [979, 298]
+    rotation: 0
+    state: true
+- name: blocks_uchar_to_float_0
+  id: blocks_uchar_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [352, 302]
     rotation: 0
     state: true
 - name: limesdr_sink_0
@@ -197,7 +242,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [843, 234]
+    coordinate: [809, 434]
     rotation: 0
     state: true
 - name: qtgui_sink_x_0
@@ -226,15 +271,45 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [845, 330]
+    coordinate: [812, 589]
+    rotation: 0
+    state: true
+- name: virtual_sink_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: t1
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1177, 298]
+    rotation: 0
+    state: true
+- name: virtual_source_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: t1
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [286, 528]
     rotation: 0
     state: true
 
 connections:
-- [blocks_file_source_0, '0', blocks_unpacked_to_packed_xx_0, '0']
-- [blocks_unpacked_to_packed_xx_0, '0', digital_constellation_modulator_0, '0']
-- [digital_constellation_modulator_0, '0', limesdr_sink_0, '0']
-- [digital_constellation_modulator_0, '0', qtgui_sink_x_0, '0']
+- [blocks_add_const_vxx_0, '0', blocks_repeat_0, '0']
+- [blocks_file_source_0, '0', blocks_uchar_to_float_0, '0']
+- [blocks_float_to_complex_0, '0', limesdr_sink_0, '0']
+- [blocks_float_to_complex_0, '0', qtgui_sink_x_0, '0']
+- [blocks_multiply_const_vxx_0, '0', blocks_add_const_vxx_0, '0']
+- [blocks_repeat_0, '0', virtual_sink_0, '0']
+- [blocks_uchar_to_float_0, '0', blocks_multiply_const_vxx_0, '0']
+- [virtual_source_0, '0', blocks_float_to_complex_0, '0']
 
 metadata:
   file_format: 1
