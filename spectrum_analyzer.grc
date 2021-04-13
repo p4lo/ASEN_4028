@@ -78,7 +78,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: 60e6
+    value: 20e6
   states:
     bus_sink: false
     bus_source: false
@@ -92,7 +92,7 @@ blocks:
     affinity: ''
     alias: ''
     allow_tcxo_dac: '0'
-    analog_bandw_ch0: 60e6
+    analog_bandw_ch0: 5e6
     analog_bandw_ch1: 1.5e6
     calibr_bandw_ch0: 5e6
     calibr_bandw_ch1: 2.5e6
@@ -100,7 +100,7 @@ blocks:
     channel_mode: '0'
     comment: ''
     dacVal: '180'
-    digital_bandw_ch0: samp_rate
+    digital_bandw_ch0: 5e6
     digital_bandw_ch1: samp_rate
     filename: ''
     gain_dB_ch0: rx_gain
@@ -109,7 +109,7 @@ blocks:
     lna_path_ch1: '2'
     maxoutbuf: '0'
     minoutbuf: '0'
-    nco_freq_ch0: 2.38e9
+    nco_freq_ch0: '0'
     nco_freq_ch1: '0'
     oversample: '0'
     rf_freq: center_frequency

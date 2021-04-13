@@ -36,7 +36,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: 2e6
+    value: 12e6
   states:
     bus_sink: false
     bus_source: false
@@ -51,7 +51,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: /home/thomasian06/Documents/Testing Data/3_11/rx2_2m
+    file: /home/thomasian06/Documents/Testing_Data/rx1_12m_LSB
     type: complex
     unbuffered: 'False'
     vlen: '1'
